@@ -14,7 +14,7 @@ int SpaceFind(int board[BOARD_SIZE][BOARD_SIZE], int deltax, int deltay, int x, 
 int CalWeight(int number1_chess, int number2_chess, int number1_space, int number2_space, int color, int color_chess);
 
 /** neighbour():
- * color: the color of the chess of AI
+ *  para: color: the color of the chess of AI
  */
 int Neighbour(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color) {
 	int chess_search[3][9]; 		// first: color | second: direction
@@ -57,11 +57,16 @@ int Neighbour(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color) {
 	return sum_weight;
 }
 
+/** ChessFind():
+ *  get the sum of chesses in the given direction
+ */
 int ChessFind(int board[BOARD_SIZE][BOARD_SIZE], int deltax, int deltay, int x, int y, int color) {
 	int sum, x_curr, y_curr;
 	x_curr = x;
 	y_curr = y;
 	sum = 0;
+
+	// Update chess sum
 	while ((x_curr + deltax < BOARD_SIZE) && (y_curr + deltay < BOARD_SIZE) \
 			&& (x_curr + deltax >= 0) && (y_curr + deltay >= 0) && \
 			(board[x_curr + deltax][y_curr + deltay] == color)) {
@@ -69,20 +74,28 @@ int ChessFind(int board[BOARD_SIZE][BOARD_SIZE], int deltax, int deltay, int x, 
 		x_curr += deltax;
 		y_curr += deltay;
 	}
+
 	return sum;
 }
 
+/** SpaceFind():
+ *  get the sum of spaces in the given direction
+ */
 int SpaceFind(int board[BOARD_SIZE][BOARD_SIZE], int deltax, int deltay, int x, int y, int color) {
 	int sum, x_curr, y_curr;
 	x_curr = x;
 	y_curr = y;
 	sum = 0;
+
+	// Move to space
 	while ((x_curr + deltax < BOARD_SIZE) && (y_curr + deltay < BOARD_SIZE) \
 				&& (x_curr + deltax >= 0) && (y_curr + deltay >= 0) && \
 				(board[x_curr + deltax][y_curr + deltay] == color)) {
 			x_curr += deltax;
 			y_curr += deltay;
 	}
+
+	// Update space sum
 	while ((x_curr + deltax < BOARD_SIZE) && (y_curr + deltay < BOARD_SIZE) \
 					&& (x_curr + deltax >= 0) && (y_curr + deltay >= 0) && \
 					(board[x_curr + deltax][y_curr + deltay] == CHESS_SPACE)) {
@@ -90,11 +103,16 @@ int SpaceFind(int board[BOARD_SIZE][BOARD_SIZE], int deltax, int deltay, int x, 
 				x_curr += deltax;
 				y_curr += deltay;
 	}
+
 	return sum;
 }
 
+/** CalWeight():
+ *  calculate the weight of a given position in the board
+ */
 int CalWeight(int number1_chess, int number2_chess, int number1_space, int number2_space, int color, int color_chess) {
-	int number_type, state_rival; // state_rival: 1 means AI, 2 means the rival.
+	int number_type;				// number_type: the chess type
+	int state_rival; 				// state_rival: 1 means AI, 2 means the rival.
 	int weight;
 
 	number_type = number1_chess + number2_chess;
@@ -102,48 +120,73 @@ int CalWeight(int number1_chess, int number2_chess, int number1_space, int numbe
 	else state_rival = 2;
 
 	weight = 0;
+
 	if ((number1_space > 0) && (number2_space > 0)) {
 		if (number_type == 1) {
 			if (number1_space + number2_space > 2) {
-				if (state_rival == 1) weight = PRI_MF1;
-				else weight = PRI_OF1;
+				if (state_rival == 1) {
+					weight = PRI_MF1;
+				} else {
+					weight = PRI_OF1;
+				}
 			}
 		}
 		else if (number_type == 2) {
-			if (state_rival == 1) weight = PRI_MF2;
-			else weight = PRI_OF2;
+			if (state_rival == 1) {
+				weight = PRI_MF2;
+			} else {
+				weight = PRI_OF2;
+			}
 		}
 		else if (number_type == 3) {
-					if (state_rival == 1) weight = PRI_MF3;
-					else weight = PRI_OF3;
+			if (state_rival == 1) {
+				weight = PRI_MF3;
+			} else {
+				weight = PRI_OF3;
+			}
 		}
 		else if (number_type == 4) {
-					if (state_rival == 1) weight = PRI_MF4;
-					else weight = PRI_OF4;
+			if (state_rival == 1) {
+				weight = PRI_MF4;
+			} else {
+				weight = PRI_OF4;
+			}
 		}
 	}
 	else {
 		if (number_type == 1) {
 			if (number1_space + number2_space > 2) {
-				if (state_rival == 1) weight = PRI_ML1;
-				else weight = PRI_OL1;
+				if (state_rival == 1) {
+					weight = PRI_ML1;
+				} else {
+					weight = PRI_OL1;
+				}
 			}
 		}
 		else if (number_type == 2) {
 			if (number1_space + number2_space > 1) {
-				if (state_rival == 1) weight = PRI_ML2;
-				else weight = PRI_OL2;
+				if (state_rival == 1) {
+					weight = PRI_ML2;
+				} else {
+					weight = PRI_OL2;
+				}
 			}
 		}
 		else if (number_type == 3) {
 			if (number1_space + number2_space > 0) {
-				if (state_rival == 1) weight = PRI_ML3;
-				else weight = PRI_OL3;
+				if (state_rival == 1){
+					weight = PRI_ML3;
+				} else {
+					weight = PRI_OL3;
+				}
 			}
 		}
 		else if (number_type == 4) {
-			if (state_rival == 1) weight = PRI_ML4;
-			else weight = PRI_OL4;
+			if (state_rival == 1) {
+				weight = PRI_ML4;
+			} else {
+				weight = PRI_OL4;
+			}
 		}
 	}
 

@@ -8,7 +8,11 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+// Board Size
 #define BOARD_SIZE 22
+
+// Function for main
+int Neighbour(int board[BOARD_SIZE][BOARD_SIZE], int x, int y, int color);
 
 // Chess color
 #define CHESS_SPACE 0
