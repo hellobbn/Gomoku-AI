@@ -6,7 +6,18 @@
  *
  *****************************************
  * Board Coordinate: (0,0) on LEFTBOTTOM *
- * ***************************************
+ *****************************************
+ *
+ * Version: 1.0
+ *
+ * TODO:  we only take the current move into consideration,
+ *        beacuse of which the AI cannot fully check the
+ *        possibilities of lose. The next task is to simulate
+ *        possible moves of the opponent for at least two
+ *        rounds. In order to do that the situation of lose
+ *        should be concluded so that we can use the result
+ *        of the possible moves as an important judge of our
+ *        current choice.
  */
 
 #include "main.h"
